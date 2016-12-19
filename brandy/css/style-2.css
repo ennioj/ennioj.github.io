@@ -26,14 +26,14 @@
     padding: 20px;
     padding-top: 0px;
     width: 350px;
-    height: 330px;
+    height: 100%;
     -webkit-transform: rotateY(-180deg);
     overflow: scroll;
 }
 
 .img_back{
-	width: 50px;
-	height: 50px;
+	width: 120px;
+	height: 100px;
 	padding: 10px;
 }
 .back_p{
