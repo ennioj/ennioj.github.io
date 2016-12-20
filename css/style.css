@@ -21,7 +21,7 @@ text-transform: uppercase;
 	color: #f74d65;
 }
 header{
-	background: url(../images/periodic_table.jpg);
+	background: url(../images/periodic_table.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 }
@@ -111,6 +111,7 @@ background-color: #2d3334;
 	font-weight: 400;
 }
 .about_us_p{
+	text-align: justify;
 	font-size: 14px;
 	color: #272727;
 	margin-top: 20px;
