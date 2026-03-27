@@ -1,466 +1,938 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ennio Trojani</title>
-    <!-- Google Font -->
-    <link href='https://fonts.googleapis.com/css?family=Dosis:300,400,500,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ennio Trojani — Staff Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- Font Awesome -->
+    :root {
+      --bg:       #0a0f0d;
+      --surface:  #111812;
+      --border:   #1e2b22;
+      --accent:   #4ade80;
+      --accent2:  #86efac;
+      --dim:      #3d5c47;
+      --text:     #e2ece6;
+      --muted:    #7a9985;
+      --mono:     'DM Mono', monospace;
+      --sans:     'Syne', sans-serif;
+    }
 
+    html { scroll-behavior: smooth; }
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-     <!-- Preloader -->
-    <link rel="stylesheet" href="css/preloader.css" type="text/css" media="screen, print"/>
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
 
-    <!-- Icon Font-->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/owl.theme.default.css">
-    <!-- Animate CSS-->
-    <link rel="stylesheet" href="css/animate.css">
+    /* ── GRID LINES ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.3;
+    }
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,15,13,0.85);
+      backdrop-filter: blur(12px);
+    }
 
+    .nav-logo {
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
 
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
 
-    <!-- Style -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-2.css" rel="stylesheet">
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
 
-    <!-- Responsive CSS -->
-    <link href="css/responsive.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="js/lte-ie7.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 100%;
+      padding: 0 48px;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: var(--sans);
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.35s;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .hero-desc {
+      max-width: 560px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.5s;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.65s;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+    }
+
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.8s;
+    }
+
+    .stat-num {
+      font-family: var(--sans);
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 48px;
+      padding-top: 120px;
+    }
+
+    .section-header h2 {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .about-text {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.9;
+      grid-column: 1 / -1;
+    }
+
+    .about-text strong { color: var(--text); font-weight: 400; }
+
+    .cert-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      transition: border-color 0.2s;
+    }
+
+    .cert-item:hover { border-color: var(--dim); }
+
+    .cert-badge {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(74,222,128,0.08);
+      padding: 3px 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .cert-name { font-size: 13px; color: var(--muted); }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 80px; }
+
+    .exp-item {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--surface);
+      transition: border-color 0.2s;
+    }
+
+    .exp-item:hover { border-color: var(--dim); }
+
+    .exp-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 16px;
+      padding: 24px 28px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .exp-title {
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .exp-company {
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .exp-promo {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .exp-date {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .exp-toggle {
+      display: block;
+      font-size: 18px;
+      color: var(--dim);
+      margin-top: 4px;
+      text-align: right;
+      transition: transform 0.3s, color 0.2s;
+    }
+
+    .exp-item.open .exp-toggle { transform: rotate(45deg); color: var(--accent); }
+
+    .exp-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 28px;
+    }
+
+    .exp-item.open .exp-body {
+      max-height: 600px;
+      padding: 0 28px 24px;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .exp-bullets li {
+      display: flex;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .exp-bullets li::before {
+      content: '▸';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .exp-bullets strong { color: var(--text); font-weight: 500; }
+
+    .exp-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 2px;
+      background: rgba(74,222,128,0.03);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 80px;
+    }
+
+    .skill-card {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 22px;
+      background: var(--surface);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-card:hover { border-color: var(--dim); transform: translateY(-2px); }
+
+    .skill-category {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .skill-items {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── CONTACT ── */
+    .contact-block {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 48px;
+      background: var(--surface);
+      margin-bottom: 120px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .contact-heading {
+      font-family: var(--sans);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .contact-heading span { color: var(--accent); }
+
+    .contact-sub { font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .contact-link:hover { border-color: var(--accent); background: rgba(74,222,128,0.04); }
+
+    .contact-link-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; }
+    .contact-link-value { font-size: 13px; color: var(--text); margin-top: 2px; }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+      background: rgba(74,222,128,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 16px 24px; }
+      #hero, section { padding-left: 24px; padding-right: 24px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-block { grid-template-columns: 1fr; padding: 28px; }
+      .hero-stats { gap: 28px; flex-wrap: wrap; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+      .nav-links { display: none; }
+    }
+  </style>
 </head>
-
 <body>
-                <!-- Preloader -->
-                <div id="preloader">
-                    <div id="status">&nbsp;</div>
-                </div>
 
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">ET_</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-
-
-    <header id="HOME" style="background-position: 50% -50px;">
-	        <div class="section_overlay">
-	            <nav class="navbar navbar-default navbar-fixed-top">
-	              <div class="container">
-	                <!-- Brand and toggle get grouped for better mobile display -->
-	                <div class="navbar-header">
-	                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	                    <span class="sr-only">Toggle navigation</span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                  </button>
-	                  <a  href="#"><img  class="img-circle img-logo" src="images/ennio_n.jpg" alt=""></a>
-		  </div>
-
-	                <!-- Collect the nav links, forms, and other content for toggling -->
-	                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	                  <ul class="nav navbar-nav navbar-right">
-	                    <li><a href="#HOME">Home</a></li>
-	                    <li><a href="#ABOUT">About</a></li>
-	                    <li><a href="#WORK">Works</a></li>
-	                    <li><a href="#CONTACT">Contact</a></li>
-	                  </ul>
-	                </div><!-- /.navbar-collapse -->
-	              </div><!-- /.container -->
-	            </nav>
-
-	            <div class="container">
-	                <div class="row">
-	                    <div class="col-md-12 text-center">
-	                        <div class="home_text wow fadeInUp animated">
-	                            <h2>it’s Ennio Trojani</h2>
-	                            <p>a System Administrator and a Technology Enthusiast</p>
-	                            <img src="images/shape.png" alt="">
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-
-	            <div class="container">
-	                <div class="row">
-	                    <div class="col-md-12 text-center">
-	                        <div class="scroll_down">
-                            <a href="#SERVICE"><img src="images/scroll.png" alt=""></a>
-	                            <h4>Scroll Down</h4>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </section>
-    </header>
-
-
-    <section class="services" id="SERVICE">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <div class="single_service wow fadeInUp" data-wow-delay="1s">
-                        <i class="icon-desktop"></i>
-                        <h2>System Administration</h2>
-			<div class="single_progress_bar">
-                          <h2>Linux Os </h2>
-                          <h2>Puppet </h2>
-                          <h2>Docker </h2>
-                        </div>
-		    </div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <div class="single_service wow fadeInUp" data-wow-delay="2s">
-                        <i class="icon-gears"></i>
-                        <h2>Development</h2>
-		        <div class="single_progress_bar">
-                            <h2>Python </h2>
-                            <h2>Ruby </h2>
-                            <h2>PHP </h2>
-                            <h2>Bash </h2>
-                          </div>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <div class="single_service wow fadeInUp" data-wow-delay="3s">
-                        <i class="icon-lock"></i>
-                        <h2>Security</h2>
-			<div class="single_progress_bar">
-                              <h2>Penetration Testing </h2>
-                              <h2>Vulnerability Assestment </h2>
-                              <h2>Kali Linux </h2>
-                              <h2>Snort </h2>
-                            </div>
-                    </div>
-                </div>
-            </div>
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">Available for new opportunities</div>
+      <h1>Ennio<br /><span>Trojani.</span></h1>
+      <p class="hero-desc">
+        Staff Software Engineer specialising in DNS infrastructure, cloud platform engineering, and event-driven systems at scale. 14 years building resilient, secure, automated infrastructure.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">↳ Get in touch</a>
+        <a href="#experience" class="btn btn-ghost">View experience</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">14+</div>
+          <div class="stat-label">Years experience</div>
         </div>
-    </section>
-    <section class="about_us_area" id="ABOUT">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="about_title">
-                        <h2>About Me</h2>
-                        <img src="images/shape.png" alt="">
-                    </div>
-                </div>
-            </div>
+        <div>
+          <div class="stat-num">CEH</div>
+          <div class="stat-label">Certified Ethical Hacker</div>
         </div>
-        <div class="container">
-            <div class="row">
-              <div class="col-md-4  wow fadeInLeft animated animated animated" style="visibility: visible; animation-name: fadeInLeft;">
-              <p class="about_us_p">I'm  a SysAdmin based in Berlin. I've been working since my graduation helping businesses running their operation smooth and without flaw, I like hunting bugs and optimizing performance. I've embraced The DevOps concept during my two last working experiences and gathered skills regarding automation and Continous deployment.
-              </p>
-            </div>
-            <div class="col-md-4  wow fadeInRight animated animated animated" style="visibility: visible; animation-name: fadeInRight;">
-              <p class="about_us_p">I like helping developers unleash their fully potential by providing them a proper operational environment, as well as introducing them with all the tools I to create, and orchestrate the infrastructure, thus creating a true DevOps culture in which turn delivers better results to the business to write code without concerns aiming to deliver better results for the business.
-              </p>
-            </div>
-            <div class="col-md-4  wow fadeInRight animated animated animated" style="visibility: visible; animation-name: fadeInRight;">
-              <p class="about_us_p">I was born in Italy in 1982, in 2014 I left the Sicilian sun and moved to Berlin. </p>
-              <p class="about_us_p">When I'm not in front of my computer you can find me enjoing my neighborhood and Berlin's parks with my dog Tara.</p>
-            </div>
-            </div>
+        <div>
+          <div class="stat-num">AWS</div>
+          <div class="stat-label">Cloud specialist</div>
         </div>
-    </section>
-    <section class="achivement_area" style="padding-bottom:150px;" id="WORK">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="about_title">
-                        <h2>Work History</h2>
-                        <img src="images/shape.png" alt="">
-                    </div>
-                </div>
-            </div>
+        <div>
+          <div class="stat-num">Python</div>
+          <div class="stat-label">software development</div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4  wow fadeInLeft animated">
-                  <div class=" wow fadeInUp" data-wow-delay="1s">
-                    <div class="info-card">
-                        <div class="front">
-                        <img class="card-image" src="images/brands4friends.jpg">
-                        </div>
-                        <div class="back">
-			  <div class="row">
-		            <i class="icon-calendar" style="float:left"></i>
-			    <p class="date_work" > Sept 2015 - ongoing</p>
-			  </div>
-			  <div class="row">
-		            <i class="icon-profile-male" style="float:left"></i>
-			    <p class="date_work" > Operation Engineer</p>
-			  </div>
-			  <div class="row">
-			    <p class="back_p">
-                              brands4friends is an online shop that sells branded products via temporary sales auctions   
-                            </p>
-		          </div>
-			  <div class="row">
-		            <ul>
-  			      <li>Implement CD mindset</li>
-                              <li>Improve Security posture</li>
-                              <li>Enhance automation process</li>
-		            </ul>
-		          </div>
-			  <div class="row">
-		            <span class="label label-primary">Ubuntu</span>
-			    <span class="label label-primary">Puppet</span>
-			    <span class="label label-primary">Docker</span>
-			    <span class="label label-primary">Python</span>
-			    <span class="label label-primary">Ruby</span>
-                            <span class="label label-primary">Mysql</span>
-			    <span class="label label-primary">Kali Linux</span>
-		          </div>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="col-md-4  wow fadeInRight animated">
-                  <div class="wow fadeInUp" data-wow-delay="1s">
-		    <div class="info-card">
-                      <div class="front">
-                        <img class="card-image" src="images/foodpanda.jpg">
-                      </div>
-            	      <div class="back">
-                        <div class="row">
-                            <i class="icon-calendar" style="float:left"></i>
-                            <p class="date_work" > Apr 2014 - May 2015</p>
-                          </div>
-			  <div class="row">
-                            <i class="icon-profile-male" style="float:left"></i>
-                            <p class="date_work" > System Engineer</p>
-                          </div>
-			  <div class="row">
-                            <p class="back_p">
-                             The foodpanda group is a global mobile food delivery marketplace headquartered in Berlin, Germany, operating in 43 countries and territories. The service allows users to select from local restaurants and place orders via its mobile applications as well as its websites.
-                            </p>
-			  </div>
-                          <div class="row">
-                            <ul>
-                              <li>Implement distribuited Callcenter infrastructure</li>
-                              <li>Automate platform roll-out</li>
-                              <li>Enhance automation process</li>
-                            </ul>
-                          </div>
-                          <div class="row">
-                            <span class="label label-primary">Ubuntu</span>
-                            <span class="label label-primary">Puppet</span>
-                            <span class="label label-primary">PHP</span>
-                            <span class="label label-primary">Aws</span>
-                            <span class="label label-primary">Mysql</span>
-                            <span class="label label-primary">Asterisk</span>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4  wow fadeInRight animated">
-                  <div class="wow fadeInUp" data-wow-delay="1s">
-                     <div class="info-card">
-                        <div class="front">
-                        <img class="card-image" src="images/logo_thewoice.png">
-                        </div>
-                        <div class="back">
-                          <div class="row">
-                            <i class="icon-calendar" style="float:left"></i>
-                              <p class="date_work" > Oct 2008 - Mar 2012</p>
-                            </div>
-                            <div class="row">
-                            <i class="icon-profile-male" style="float:left"></i>
-                              <p class="date_work" > Voice Engineer</p>
-                            </div>
-                            <div class="row">
-                              <p class="back_p">
-                                Thewoice is is a multi channel platform for communication and distribute information via web, phone, fax, email.
-                              </p>
-                            </div>
-                            <div class="row">
-                              <ul>
-                                <li>Design Data Model for Application</li>
-                                <li>Backend PHP development</li>
-                                <li>Voice interface development</li>
-                              </ul>
-                            </div>
-                            <div class="row">
-                              <span class="label label-primary">Ubuntu</span>
-                              <span class="label label-primary">Asterisk</span>
-                              <span class="label label-primary">VXML</span>
-                              <span class="label label-primary">PHP</span>
-                              <span class="label label-primary">Mysql</span>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <div class="fun_facts">
-    	<section class="header parallax home-parallax page" id="fun_facts" style="background-position: 50% ">
-	        <div class="section_overlay">
-	            <div class="container">
-			    <div class="single_count"> <h3 style="font-size: 30px;text-transform: uppercase;"> Semi interesting facts: </h3> </div>
-	                <div class="row">
-	                    <div class="col-md-6 wow fadeInLeft animated">
-	                        <div class="row">
-	                            <div class="col-md-4">
-	                                <div class="single_count">
-	                                    <i class="icon-pencil"></i>
-	                                    <p>VI is my favourite editor</p>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-4">
-	                                <div class="single_count">
-	                                    <i class="icon-cloud"></i>
-	                                    <p>I'm an AWS Fan</p>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-4">
-	                                <div class="single_count">
-	                                    <i class="icon-trophy"></i>
-	                                    <p>CEH and CPT Certified</p>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-md-5 col-md-offset-1 wow fadeInRight animated">
-	                        <!--<div class="imac">
-	                            <img src="images/imac.png" alt="">
-			    </div>-->
-	                    </div>
-	                </div>
-	            </div>            
-	        </div>
-	    </section>    
+      </div>
     </div>
-    <section class="contact" id="CONTACT">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="contact_title  wow fadeInUp animated">
-                        <h1>get in touch</h1>
-                        <img src="images/shape.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4  wow fadeInLeft animated">
-                    <div class="single_contact_info">
-                        <h2>Call Me</h2>
-                        <p>+49 15168969459</p>
-                    </div>
-		</div>
-		<div class="col-md-4  wow fadeInLeft animated">
-                    <div class="single_contact_info">
-                        <h2>Email Me</h2>
-                        <p>ennio.trojani@gmail.com</p>
-		    </div>
-		 </div>
-		<div class="col-md-4  wow fadeInLeft animated">
-                    <div class="single_contact_info">
-		      <h2></h2>
-                      <a href="https://de.linkedin.com/pub/ennio-trojani/16/629/83">
-		      <img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_viewmy_160x33.png" width="160" height="33" border="0" alt="check my LinkedIn profile">
-</a>
-                    </div>
-                </div>
-                <!--<div class="col-md-9  wow fadeInRight animated">
-                    <form class="contact-form" action="">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" id="name" placeholder="Name">
-                                <input type="email" class="form-control" id="email" placeholder="Email">
-                                <input type="text" class="form-control" id="subject" placeholder="Subject">                                
-                            </div>
-                            <div class="col-md-6">
-                                <textarea class="form-control" id="message" rows="25" cols="10" placeholder="  Message Texts..."></textarea>
-                                <button type="button" class="btn btn-default submit-btn form_submit">SEND MESSAGE</button>                                
-                            </div>
-                        </div>
-                    </form>
-	    </div>-->
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="work-with   wow fadeInUp animated">
-                        <h3>looking forward to hearing from you!</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  </div>
 
-
-
-<footer>
-    <div class="container">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="copyright_text   wow fadeInUp animated">
-                        <p>&copy; brandy 2015.All Right Reserved By <a href="http://www.themeforest.net/user/thecodecafe"target="_blank">Code Cafe Team</a></p>
-                        <p>Made with love for creative people.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header reveal">
+      <h2>About</h2>
+      <div class="section-line"></div>
     </div>
-</footer>
 
+    <p class="about-text reveal">
+      I'm a <strong>Staff Software Engineer</strong> specialised in operations and based in <strong>Italy</strong>, with a background spanning system administration, DevOps, and platform engineering. I specialise in designing scalable, secure DNS and cloud infrastructure — with a particular focus on <strong>automation, event-driven architecture, and embedded security</strong>.<br /><br />
+      At Zendesk I was promoted from Senior to Staff Engineer in 2024, leading the architecture of core DNS infrastructure including a full Kafka-based pipeline rewrite, geo-failover automation, and TLS certificate lifecycle management at scale. I hold a <strong>Bachelor's in Computer Engineering</strong> from the University of Catania, and certifications in ethical hacking and penetration testing.
+    </p>
 
+    <div class="cert-block reveal" style="margin-top: 32px; margin-bottom: 80px;">
+      <div class="cert-item">
+        <span class="cert-badge">CEH</span>
+        <span class="cert-name">Certified Ethical Hacker — EC-Council, 2016</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-badge">CPT</span>
+        <span class="cert-name">Certified Penetration Tester — 2016</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-badge">BSc</span>
+        <span class="cert-name">Computer Engineering — Università degli Studi di Catania</span>
+      </div>
+    </div>
+  </section>
 
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header reveal">
+      <h2>Experience</h2>
+      <div class="section-line"></div>
+    </div>
 
+    <div class="exp-list reveal">
 
+      <div class="exp-item open">
+        <div class="exp-header" onclick="toggle(this)">
+          <div>
+            <div class="exp-title">Staff Software Engineer</div>
+            <div class="exp-company">Zendesk</div>
+            <div class="exp-promo">Promoted Senior → Staff, Q2 2024</div>
+          </div>
+          <div>
+            <div class="exp-date">Sep 2021 — Mar 2026</div>
+            <span class="exp-toggle">+</span>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li><span><strong>RFC Author & Architect:</strong> Consolidated ~20 Route 53 zones into a single apex zone — eliminating manual DNS ops and enabling full infrastructure automation across the AWS account.</span></li>
+            <li><span><strong>Kafka Migration Lead:</strong> Full rewrite of a legacy Ruby cron system into a Python/Kafka event-driven pipeline — processing thousands of DNS events/day, reducing propagation latency from minutes to seconds.</span></li>
+            <li><span><strong>Geo-failover Automation:</strong> Designed and built a fully automated CDN geo-failover system using Datadog RUM signals, Python, and K8s — managing Route 53 geolocation records to bypass regional CDN failures. Reduced customer-impacting incident duration by ~50%.</span></li>
+            <li><span><strong>TLS Automation:</strong> Built certificate lifecycle automation managing 100+ certs — eliminating significant manual ops burden and expiry risk.</span></li>
+            <li><span><strong>Security Champion:</strong> Embedded security review across multiple teams' design and delivery processes.</span></li>
+          </ul>
+          <div class="exp-stack">
+            <span class="tag">Python</span><span class="tag">Kafka</span><span class="tag">AWS Route 53</span>
+            <span class="tag">Terraform</span><span class="tag">Spinnaker</span><span class="tag">Datadog</span>
+            <span class="tag">Kubernetes</span><span class="tag">boto3</span><span class="tag">CloudFormation</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="exp-item">
+        <div class="exp-header" onclick="toggle(this)">
+          <div>
+            <div class="exp-title">DevOps Engineer</div>
+            <div class="exp-company">Bitbull</div>
+          </div>
+          <div>
+            <div class="exp-date">Jun 2020 — Sep 2021</div>
+            <span class="exp-toggle">+</span>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li><span>Managed full AWS infrastructure for eCommerce clients — ECS, EC2, RDS, ElastiCache, Lambda, API Gateway.</span></li>
+            <li><span>Automated TLS certificate provisioning via Cloudflare DNS.</span></li>
+            <li><span>Owned cost management reporting and pre-sales technical presentations.</span></li>
+          </ul>
+          <div class="exp-stack">
+            <span class="tag">AWS</span><span class="tag">ECS</span><span class="tag">Terraform</span>
+            <span class="tag">Cloudflare</span><span class="tag">CodePipeline</span><span class="tag">CloudWatch</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="exp-item">
+        <div class="exp-header" onclick="toggle(this)">
+          <div>
+            <div class="exp-title">DevOps Engineer</div>
+            <div class="exp-company">Vitamojo</div>
+          </div>
+          <div>
+            <div class="exp-date">Oct 2018 — May 2020</div>
+            <span class="exp-toggle">+</span>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li><span>Built full observability stack: Grafana, Prometheus, ELK with Slack alerting.</span></li>
+            <li><span>Developed feature-branch deployment automation in Python and Terraform.</span></li>
+            <li><span>Security automation via SonarQube and Tenable.io integrated into CI/CD.</span></li>
+          </ul>
+          <div class="exp-stack">
+            <span class="tag">AWS</span><span class="tag">Grafana</span><span class="tag">Prometheus</span>
+            <span class="tag">ELK</span><span class="tag">Jenkins</span><span class="tag">SonarQube</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="exp-item">
+        <div class="exp-header" onclick="toggle(this)">
+          <div>
+            <div class="exp-title">DevOps Engineer</div>
+            <div class="exp-company">Piksel</div>
+          </div>
+          <div>
+            <div class="exp-date">Jan 2018 — Oct 2018</div>
+            <span class="exp-toggle">+</span>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li><span>Migrated infrastructure from EC2 to ECS, containerising microservices from scratch with Docker and Terraform.</span></li>
+          </ul>
+          <div class="exp-stack">
+            <span class="tag">Docker</span><span class="tag">ECS</span><span class="tag">Terraform</span><span class="tag">GOCD</span><span class="tag">Puppet</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="exp-item">
+        <div class="exp-header" onclick="toggle(this)">
+          <div>
+            <div class="exp-title">Site Operations Engineer</div>
+            <div class="exp-company">Brands4friends</div>
+          </div>
+          <div>
+            <div class="exp-date">Sep 2015 — Dec 2017</div>
+            <span class="exp-toggle">+</span>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li><span>Managed eCommerce infrastructure on Linux Ubuntu, VMware ESXi, Docker, Kubernetes.</span></li>
+            <li><span>Database operations: MySQL, Percona, Galera cluster.</span></li>
+            <li><span>Security: penetration testing, Qualys, WAF, Nagios/Icinga monitoring.</span></li>
+          </ul>
+          <div class="exp-stack">
+            <span class="tag">Linux</span><span class="tag">Kubernetes</span><span class="tag">Docker</span>
+            <span class="tag">MySQL</span><span class="tag">Puppet</span><span class="tag">Kali Linux</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="exp-item">
+        <div class="exp-header" onclick="toggle(this)">
+          <div>
+            <div class="exp-title">System Engineer</div>
+            <div class="exp-company">Foodpanda</div>
+          </div>
+          <div>
+            <div class="exp-date">Apr 2014 — May 2015</div>
+            <span class="exp-toggle">+</span>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li><span>Built and maintained global call-centre infrastructure across ~40 countries, with 24/7 on-call rotation.</span></li>
+          </ul>
+          <div class="exp-stack">
+            <span class="tag">AWS</span><span class="tag">Puppet</span><span class="tag">Nagios</span><span class="tag">MySQL</span><span class="tag">Linux</span>
+          </div>
+        </div>
+      </div>
 
-<!-- =========================
-     SCRIPTS 
-============================== -->
+      <div class="exp-item">
+        <div class="exp-header" onclick="toggle(this)">
+          <div>
+            <div class="exp-title">System Engineer — Team Lead</div>
+            <div class="exp-company">Be-On</div>
+          </div>
+          <div>
+            <div class="exp-date">Oct 2011 — Mar 2014</div>
+            <span class="exp-toggle">+</span>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li><span>Led a team of 5 engineers across full product lifecycle for contact-centre solutions — infrastructure design, VPN/networking, LAMP deployment.</span></li>
+          </ul>
+          <div class="exp-stack">
+            <span class="tag">Linux</span><span class="tag">Apache</span><span class="tag">MySQL</span><span class="tag">OpenVPN</span><span class="tag">PHP</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="exp-item">
+        <div class="exp-header" onclick="toggle(this)">
+          <div>
+            <div class="exp-title">System Integrator</div>
+            <div class="exp-company">TheWoice</div>
+          </div>
+          <div>
+            <div class="exp-date">Oct 2008 — Mar 2012</div>
+            <span class="exp-toggle">+</span>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li><span>Deployed and maintained Ubuntu server infrastructure for a multi-channel communications platform (web, phone, fax, email, VOIP).</span></li>
+          </ul>
+          <div class="exp-stack">
+            <span class="tag">Linux</span><span class="tag">Apache</span><span class="tag">MySQL</span><span class="tag">VOIP</span><span class="tag">PHP</span>
+          </div>
+        </div>
+      </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nicescroll.js"></script>
-    <script src="js/owl.carousel.js"></script>
-    <script src="js/wow.js"></script>
-    <script src="js/script.js"></script>
+    </div>
+  </section>
 
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header reveal">
+      <h2>Skills</h2>
+      <div class="section-line"></div>
+    </div>
 
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-category">Cloud</div>
+        <div class="skill-items">AWS · EC2 · ECS · RDS · Lambda · Route 53 · API Gateway · CloudFormation · boto3 · Cloudflare</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">IaC & CI/CD</div>
+        <div class="skill-items">Terraform · Spinnaker · Jenkins · GitLab CI · CodePipeline · GOCD · CloudFormation</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Event Streaming</div>
+        <div class="skill-items">Apache Kafka · Event-driven architecture · Real-time pipeline design</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Observability</div>
+        <div class="skill-items">Datadog · Datadog RUM · Grafana · Prometheus · ELK Stack · CloudWatch · Nagios · Icinga</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Security</div>
+        <div class="skill-items">CEH · CPT · TLS/PKI automation · WAF · DNS security · SonarQube · Tenable.io · Penetration Testing</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Containers & Systems</div>
+        <div class="skill-items">Docker · Kubernetes · ECS · Linux (Ubuntu) · VMware ESXi · Puppet</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Languages</div>
+        <div class="skill-items">Python · Bash · Ruby</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Databases</div>
+        <div class="skill-items">MySQL · Percona · Galera Cluster · RDS</div>
+      </div>
+    </div>
+  </section>
 
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <h2>Contact</h2>
+      <div class="section-line"></div>
+    </div>
 
+    <div class="contact-block reveal">
+      <div>
+        <div class="contact-heading">Let's<br /><span>connect.</span></div>
+        <p class="contact-sub">Open to Staff roles in platform, infrastructure, or SRE. Based in Italy — open to remote.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:ennio.trojani@gmail.com" class="contact-link">
+          <div class="contact-icon">✉</div>
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-value">ennio.trojani@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+393286868200" class="contact-link">
+          <div class="contact-icon">☏</div>
+          <div>
+            <div class="contact-link-label">Phone</div>
+            <div class="contact-link-value">+39 328 686 8200</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/enniotrojani" target="_blank" class="contact-link">
+          <div class="contact-icon">in</div>
+          <div>
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-value">linkedin.com/in/enniotrojani</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Ennio Trojani</span>
+    <span>Italy · Italian / English / German</span>
+  </footer>
+
+  <script>
+    function toggle(header) {
+      const item = header.closest('.exp-item');
+      item.classList.toggle('open');
+    }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
-
 </html>
